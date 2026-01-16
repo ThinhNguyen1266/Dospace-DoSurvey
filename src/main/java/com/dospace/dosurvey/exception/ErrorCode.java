@@ -36,6 +36,15 @@ public enum ErrorCode {
     INVALID_TENANT_SETTING(400, "Cannot update tenant access for a form that does not belong to the tenant.", HttpStatus.BAD_REQUEST),
     INVALID_NAVIGATION_TARGET(400, "Invalid navigation target. Must be 'NEXT', 'SUBMIT', or valid pageId.", HttpStatus.BAD_REQUEST),
 
+    // Group Errors
+    GROUP_NOT_FOUND(404, "Group not found.", HttpStatus.NOT_FOUND),
+    GROUP_ACCESS_DENIED(403, "You do not have access to this group.", HttpStatus.FORBIDDEN),
+    ALREADY_GROUP_MEMBER(400, "User is already a member of this group.", HttpStatus.BAD_REQUEST),
+    NOT_GROUP_MEMBER(400, "You are not a member of this group.", HttpStatus.BAD_REQUEST),
+    CANNOT_REMOVE_OWNER(400, "Cannot remove the group owner.", HttpStatus.BAD_REQUEST),
+    INVITATION_NOT_FOUND(404, "Invitation not found.", HttpStatus.NOT_FOUND),
+    CANNOT_CHANGE_OWNER_ROLE(400, "Cannot change the owner's role.", HttpStatus.BAD_REQUEST),
+
     // General Errors
     UNCATEGORIZED_EXCEPTION(500, "An error has occurred", HttpStatus.INTERNAL_SERVER_ERROR);
 

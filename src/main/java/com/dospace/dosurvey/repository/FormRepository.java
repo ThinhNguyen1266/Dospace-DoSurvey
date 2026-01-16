@@ -37,4 +37,9 @@ public interface FormRepository extends JpaRepository<FormEntity, String>, JpaSp
     boolean existsByPublicLink(String publicLink);
 
     boolean existsByEditorLink(String editorLink);
+
+    Page<FormEntity> findByGroupIdAndDeleteStatus(String groupId, DeleteStatus deleteStatus, Pageable pageable);
+
+    @Query("SELECT f FROM FormEntity f WHERE f.group.id = :groupId AND f.deleteStatus = :deleteStatus")
+    List<FormEntity> findAllByGroupIdAndDeleteStatus(String groupId, DeleteStatus deleteStatus);
 }

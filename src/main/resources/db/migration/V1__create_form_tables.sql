@@ -22,12 +22,61 @@ CREATE TABLE IF NOT EXISTS form_category
 CREATE INDEX idx_form_category_name ON form_category (name, status, delete_status);
 CREATE INDEX idx_form_category_tenant_id ON form_category (tenant_id, delete_status);
 
+-- Form Group Table
+CREATE TABLE IF NOT EXISTS form_group
+(
+    id            VARCHAR(12)  NOT NULL,
+    tenant_id     VARCHAR(12)  NULL,
+    name          VARCHAR(128) NOT NULL,
+    description   VARCHAR(512) NULL,
+    owner_id      VARCHAR(12)  NOT NULL,
+    delete_status VARCHAR(20)  NOT NULL DEFAULT 'ACTIVE',
+    created_by    VARCHAR(12)  NULL,
+    created_at    TIMESTAMP    NULL,
+    updated_by    VARCHAR(12)  NULL,
+    updated_at    TIMESTAMP    NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT chk_fg_delete_status CHECK (delete_status IN ('ACTIVE', 'DELETED'))
+);
+
+CREATE INDEX idx_form_group_owner_id ON form_group (owner_id, delete_status);
+CREATE INDEX idx_form_group_tenant_id ON form_group (tenant_id, delete_status);
+
+-- Form Group Member Table
+CREATE TABLE IF NOT EXISTS form_group_member
+(
+    id             VARCHAR(12)  NOT NULL,
+    group_id       VARCHAR(12)  NOT NULL,
+    email          VARCHAR(255) NOT NULL,
+    account_id     VARCHAR(12)  NULL,
+    role           VARCHAR(20)  NOT NULL DEFAULT 'MEMBER',
+    status         VARCHAR(20)  NOT NULL DEFAULT 'PENDING',
+    invited_by     VARCHAR(12)  NULL,
+    invited_at     TIMESTAMP    NULL,
+    accepted_at    TIMESTAMP    NULL,
+    created_by     VARCHAR(12)  NULL,
+    created_at     TIMESTAMP    NULL,
+    updated_by     VARCHAR(12)  NULL,
+    updated_at     TIMESTAMP    NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT chk_fgm_role CHECK (role IN ('OWNER', 'ADMIN', 'MEMBER', 'VIEWER')),
+    CONSTRAINT chk_fgm_status CHECK (status IN ('PENDING', 'ACCEPTED', 'DECLINED', 'REMOVED')),
+    CONSTRAINT fk_fgm_group FOREIGN KEY (group_id)
+        REFERENCES form_group (id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE INDEX idx_form_group_member_group_id ON form_group_member (group_id, status);
+CREATE INDEX idx_form_group_member_email ON form_group_member (email, status);
+CREATE INDEX idx_form_group_member_account_id ON form_group_member (account_id, status);
+CREATE UNIQUE INDEX uq_form_group_member_email ON form_group_member (group_id, email);
+
 -- Form Table
 CREATE TABLE IF NOT EXISTS form
 (
     id               VARCHAR(12)  NOT NULL,
     tenant_id        VARCHAR(12)  NULL,
     owner_id         VARCHAR(12)  NOT NULL,
+    group_id         VARCHAR(12)  NULL,
     title            VARCHAR(255) NOT NULL,
     description      TEXT         NULL,
     public_link      VARCHAR(255) NOT NULL UNIQUE,
@@ -51,6 +100,7 @@ CREATE TABLE IF NOT EXISTS form
     close_mode       VARCHAR(20)  NOT NULL DEFAULT 'MANUAL',
     max_response     INTEGER      NULL,
     auto_thanks      BOOLEAN      NOT NULL DEFAULT FALSE,
+    thank_you_message TEXT        NULL,
     valid_from       TIMESTAMP    NULL,
     valid_through    TIMESTAMP    NULL,
     form_for         VARCHAR(20)  NOT NULL DEFAULT 'ALL',
@@ -66,10 +116,13 @@ CREATE TABLE IF NOT EXISTS form
     CONSTRAINT chk_fom_responder_access CHECK (responder_access IN ('RESTRICTED', 'TENANT', 'ANYONE_WITH_LINK')),
     CONSTRAINT chk_fom_editor_access CHECK (editor_access IN ('RESTRICTED', 'TENANT', 'ANYONE_WITH_LINK')),
     CONSTRAINT fk_form_category FOREIGN KEY (category_id)
-        REFERENCES form_category (id) ON DELETE SET NULL ON UPDATE CASCADE
+        REFERENCES form_category (id) ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_form_group FOREIGN KEY (group_id)
+        REFERENCES form_group (id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE INDEX idx_form_category_id ON form (category_id);
+CREATE INDEX idx_form_group_id ON form (group_id, delete_status);
 CREATE INDEX idx_form_status ON form (status, delete_status);
 CREATE INDEX idx_form_owner_id ON form (owner_id, delete_status);
 CREATE INDEX idx_form_tenant_id ON form (tenant_id, delete_status);

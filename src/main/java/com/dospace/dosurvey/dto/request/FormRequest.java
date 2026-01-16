@@ -43,6 +43,8 @@ public class FormRequest {
 
     Boolean autoThanks;
 
+    String thankYouMessage;
+
     LocalDateTime validFrom;
 
     LocalDateTime validThrough;
@@ -66,6 +68,8 @@ public class FormRequest {
     AccessPermission responderAccess;
 
     Boolean editorsCanShare;
+
+    String groupId;
 
     @Valid
     @NotNull(message = "Pages are required")

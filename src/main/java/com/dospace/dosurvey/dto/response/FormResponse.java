@@ -42,6 +42,7 @@ public class FormResponse {
     FormFor formFor;
     Integer maxResponse;
     Boolean autoThanks;
+    String thankYouMessage;
     LocalDateTime validFrom;
     LocalDateTime validThrough;
     AccessPermission editorAccess;
@@ -49,6 +50,8 @@ public class FormResponse {
     Boolean editorsCanShare;
     String categoryId;
     String categoryName;
+    String groupId;
+    String groupName;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     List<FormPageResponse> pages;

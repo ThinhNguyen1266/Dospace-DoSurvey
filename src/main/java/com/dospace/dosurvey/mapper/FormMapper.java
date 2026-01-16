@@ -35,11 +35,14 @@ public interface FormMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "collaborators", ignore = true)
     @Mapping(target = "category", ignore = true)
+    @Mapping(target = "group", ignore = true)
     @Mapping(target = "responses", ignore = true)
     FormEntity fromRequestToEntity(FormRequest request);
 
     @Mapping(target = "categoryId", source = "category.id")
     @Mapping(target = "categoryName", source = "category.name")
+    @Mapping(target = "groupId", source = "group.id")
+    @Mapping(target = "groupName", source = "group.name")
     FormResponse fromEntityToResponse(FormEntity entity);
 
     @Mapping(target = "id", source = "id")
@@ -72,6 +75,7 @@ public interface FormMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "collaborators", ignore = true)
     @Mapping(target = "category", ignore = true)
+    @Mapping(target = "group", ignore = true)
     @Mapping(target = "responses", ignore = true)
     @Mapping(target = "pages", ignore = true)
     void updateFromRequestToEntity(FormRequest request, @MappingTarget FormEntity entity);

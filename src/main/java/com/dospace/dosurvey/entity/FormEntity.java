@@ -57,6 +57,11 @@ public class FormEntity extends BaseAuditableEntity {
     @Column(name = "owner_id", nullable = false, length = 12)
     String ownerId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "group_id")
+    FormGroupEntity group;
+
     @Column(name = "title", nullable = false)
     String title;
 
@@ -142,6 +147,9 @@ public class FormEntity extends BaseAuditableEntity {
     @ColumnDefault("false")
     @Column(name = "auto_thanks", nullable = false)
     Boolean autoThanks;
+
+    @Column(name = "thank_you_message", columnDefinition = "TEXT")
+    String thankYouMessage;
 
     @Column(name = "valid_from")
     LocalDateTime validFrom;
