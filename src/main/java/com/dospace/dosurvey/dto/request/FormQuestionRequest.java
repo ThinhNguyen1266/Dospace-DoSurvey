@@ -43,6 +43,8 @@ public class FormQuestionRequest {
 
     List<String> options;
 
+    List<String> gridRows;
+
     Integer scaleCount;
 
     String description;

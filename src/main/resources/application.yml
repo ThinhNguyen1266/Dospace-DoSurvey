@@ -7,14 +7,14 @@ spring:
   data:
     redis:
       master:
-        host: ${REDIS_MASTER_HOST:localhost}
-        port: ${REDIS_MASTER_PORT:6379}
-      password: ${REDIS_PASSWORD:dospace}
-      replicas: ${REDIS_REPLICAS:localhost:6380,localhost:6381}
+        host: ${REDIS_MASTER_HOST}
+        port: ${REDIS_MASTER_PORT}
+      password: ${REDIS_PASSWORD}
+      replicas: ${REDIS_REPLICAS}
   datasource:
-    url: ${DOSURVEY_DB_URL:jdbc:postgresql://localhost:5434/dosurvey}
-    username: ${DOSURVEY_DB_USER:dospace}
-    password: ${DOSURVEY_DB_PASSWORD:dospace}
+    url: ${DOSURVEY_DB_URL}
+    username: ${DOSURVEY_DB_USER}
+    password: ${DOSURVEY_DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     open-in-view: false
@@ -33,7 +33,7 @@ spring:
     locations: classpath:db/migration
     baseline-on-migrate: true
   kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -43,13 +43,13 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+      defaultZone: ${EUREKA_URL}
   instance:
     prefer-ip-address: true
 
 # Service URLs for Feign clients
 tenant-iam-service:
-  url: ${TENANT_IAM_SERVICE_URL:http://localhost:8081}
+  url: ${TENANT_IAM_SERVICE_URL}
 
 management:
   endpoints:

@@ -28,6 +28,7 @@ public class FormQuestionResponse {
     QuestionType questionType;
     RatingType ratingType;
     List<String> options;
+    List<String> gridRows;
     Integer scaleCount;
     String description;
     Map<String, String> navigationConfig;

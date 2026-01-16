@@ -79,6 +79,10 @@ public class FormQuestionEntity extends BaseAuditableEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     List<String> options;
 
+    @Column(name = "grid_rows", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
+    List<String> gridRows;
+
     @Column(name = "scale_count")
     Integer scaleCount;
 

@@ -182,6 +182,7 @@ CREATE TABLE IF NOT EXISTS form_question
     rating_type      VARCHAR(20)  NULL,
     navigation_config JSONB       NULL,
     options          JSONB        NULL,
+    grid_rows        JSONB        NULL,
     scale_count      INTEGER      NULL,
     description      TEXT         NULL,
     created_by       VARCHAR(12)  NULL,
@@ -190,7 +191,7 @@ CREATE TABLE IF NOT EXISTS form_question
     updated_at       TIMESTAMP    NULL,
     PRIMARY KEY (id),
     CONSTRAINT chk_fqu_input_type CHECK (input_type IN ('TEXT', 'NUMBER', 'EMAIL', 'PHONE', 'DATE', 'TIME', 'DATETIME_LOCAL', 'NONE')),
-    CONSTRAINT chk_fqu_question_type CHECK (question_type IN ('SINGLE_LINE_INPUT', 'CHECKBOXES', 'RADIO_BUTTON_GROUP', 'RATING_SCALE', 'YES_NO', 'LONG_TEXT', 'FILE_UPLOAD')),
+    CONSTRAINT chk_fqu_question_type CHECK (question_type IN ('SINGLE_LINE_INPUT', 'CHECKBOXES', 'RADIO_BUTTON_GROUP', 'RATING_SCALE', 'YES_NO', 'LONG_TEXT', 'FILE_UPLOAD', 'SINGLE_CHOICE_GRID', 'MULTIPLE_CHOICE_GRID')),
     CONSTRAINT chk_fqu_rating_type CHECK (rating_type IS NULL OR rating_type IN ('NONE', 'STAR', 'LABEL')),
     CONSTRAINT fk_question_page FOREIGN KEY (page_id)
         REFERENCES form_page (id) ON DELETE CASCADE ON UPDATE CASCADE

@@ -78,7 +78,8 @@ public class FormServiceImpl implements FormService {
 
         // Set category if provided
         if (request.getCategoryId() != null) {
-            FormCategoryEntity category = formCategoryRepository.findByIdAndDeleteStatus(request.getCategoryId(), DeleteStatus.ACTIVE)
+            FormCategoryEntity category = formCategoryRepository
+                    .findByIdAndDeleteStatus(request.getCategoryId(), DeleteStatus.ACTIVE)
                     .orElseThrow(() -> new AppException(ErrorCode.FORM_CATEGORY_NOT_FOUND));
             formEntity.setCategory(category);
         }
@@ -130,7 +131,8 @@ public class FormServiceImpl implements FormService {
     }
 
     @Override
-    public Page<FormResponse> getAll(FormStatus status, FormFor formFor, String categoryId, boolean includeShared, Pageable pageable) {
+    public Page<FormResponse> getAll(FormStatus status, FormFor formFor, String categoryId, boolean includeShared,
+            Pageable pageable) {
         String userId = SecurityContextUtil.getCurrentAccountId();
         String tenantId = TenantContextHolder.getCurrentTenant();
 
@@ -141,8 +143,7 @@ public class FormServiceImpl implements FormService {
                 status,
                 DeleteStatus.ACTIVE,
                 formFor,
-                categoryId
-        );
+                categoryId);
 
         return formRepository.findAll(spec, pageable)
                 .map(formMapper::fromEntityToResponse);
@@ -169,7 +170,8 @@ public class FormServiceImpl implements FormService {
 
         // Update category
         if (request.getCategoryId() != null) {
-            FormCategoryEntity category = formCategoryRepository.findByIdAndDeleteStatus(request.getCategoryId(), DeleteStatus.ACTIVE)
+            FormCategoryEntity category = formCategoryRepository
+                    .findByIdAndDeleteStatus(request.getCategoryId(), DeleteStatus.ACTIVE)
                     .orElseThrow(() -> new AppException(ErrorCode.FORM_CATEGORY_NOT_FOUND));
             entity.setCategory(category);
         } else {
@@ -329,6 +331,20 @@ public class FormServiceImpl implements FormService {
                 questionEntity.setAlias("q" + questionOrder);
             }
 
+            // Handle grid rows
+            if (questionRequest.getQuestionType() == com.dospace.dosurvey.entity.enums.QuestionType.SINGLE_CHOICE_GRID
+                    ||
+                    questionRequest
+                            .getQuestionType() == com.dospace.dosurvey.entity.enums.QuestionType.MULTIPLE_CHOICE_GRID) {
+                if (questionRequest.getGridRows() != null) {
+                    questionEntity.setGridRows(new ArrayList<>(questionRequest.getGridRows()));
+                } else {
+                    questionEntity.setGridRows(new ArrayList<>());
+                }
+            } else {
+                questionEntity.setGridRows(null);
+            }
+
             questionEntity = formQuestionRepository.save(questionEntity);
             questions.add(questionEntity);
         }
@@ -387,7 +403,8 @@ public class FormServiceImpl implements FormService {
     }
 
     private void syncQuestions(FormPageEntity page, List<FormQuestionRequest> questionRequests) {
-        List<FormQuestionEntity> existingQuestions = formQuestionRepository.findAllByPageIdOrderByOrderAsc(page.getId());
+        List<FormQuestionEntity> existingQuestions = formQuestionRepository
+                .findAllByPageIdOrderByOrderAsc(page.getId());
         Map<String, FormQuestionEntity> existingQuestionMap = existingQuestions.stream()
                 .filter(q -> q.getId() != null)
                 .collect(Collectors.toMap(FormQuestionEntity::getId, Function.identity()));
@@ -415,6 +432,20 @@ public class FormServiceImpl implements FormService {
                 questionEntity.setAlias("q" + questionOrder);
             }
 
+            // Handle grid rows
+            if (questionRequest.getQuestionType() == com.dospace.dosurvey.entity.enums.QuestionType.SINGLE_CHOICE_GRID
+                    ||
+                    questionRequest
+                            .getQuestionType() == com.dospace.dosurvey.entity.enums.QuestionType.MULTIPLE_CHOICE_GRID) {
+                if (questionRequest.getGridRows() != null) {
+                    questionEntity.setGridRows(new ArrayList<>(questionRequest.getGridRows()));
+                } else {
+                    questionEntity.setGridRows(new ArrayList<>());
+                }
+            } else {
+                questionEntity.setGridRows(null);
+            }
+
             formQuestionRepository.save(questionEntity);
         }
 
@@ -439,7 +470,8 @@ public class FormServiceImpl implements FormService {
         }
     }
 
-    private SharingSettingsResponse buildSharingSettingsResponse(FormEntity entity, List<FormCollaboratorEntity> collaborators) {
+    private SharingSettingsResponse buildSharingSettingsResponse(FormEntity entity,
+            List<FormCollaboratorEntity> collaborators) {
         List<SharingSettingsResponse.CollaboratorResponse> collaboratorResponses = collaborators.stream()
                 .map(collab -> SharingSettingsResponse.CollaboratorResponse.builder()
                         .accountId(collab.getAccountId())

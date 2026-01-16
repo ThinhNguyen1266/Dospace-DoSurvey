@@ -7,5 +7,7 @@ public enum QuestionType {
     RATING_SCALE,
     YES_NO,
     LONG_TEXT,
-    FILE_UPLOAD
+    FILE_UPLOAD,
+    SINGLE_CHOICE_GRID,
+    MULTIPLE_CHOICE_GRID
 }
