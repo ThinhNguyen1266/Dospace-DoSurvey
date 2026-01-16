@@ -1,15 +1,15 @@
 package com.dospace.dosurvey.controller;
 
 import com.dospace.dosurvey.dto.APIResponse;
-import com.dospace.dosurvey.dto.request.form.FormAIRequest;
-import com.dospace.dosurvey.dto.request.form.FormRequest;
-import com.dospace.dosurvey.dto.request.form.TransferFormOwnershipRequest;
-import com.dospace.dosurvey.dto.request.form.UpdateSharingRequest;
-import com.dospace.dosurvey.dto.response.form.FormAIResponse;
-import com.dospace.dosurvey.dto.response.form.FormEditorResponse;
-import com.dospace.dosurvey.dto.response.form.FormOptions;
-import com.dospace.dosurvey.dto.response.form.FormResponse;
-import com.dospace.dosurvey.dto.response.form.SharingSettingsResponse;
+import com.dospace.dosurvey.dto.request.FormAIRequest;
+import com.dospace.dosurvey.dto.request.FormRequest;
+import com.dospace.dosurvey.dto.request.TransferFormOwnershipRequest;
+import com.dospace.dosurvey.dto.request.UpdateSharingRequest;
+import com.dospace.dosurvey.dto.response.FormAIResponse;
+import com.dospace.dosurvey.dto.response.FormEditorResponse;
+import com.dospace.dosurvey.dto.response.FormOptions;
+import com.dospace.dosurvey.dto.response.FormResponse;
+import com.dospace.dosurvey.dto.response.SharingSettingsResponse;
 import com.dospace.dosurvey.entity.enums.FormFor;
 import com.dospace.dosurvey.entity.enums.FormStatus;
 import com.dospace.dosurvey.service.interfaces.FormService;

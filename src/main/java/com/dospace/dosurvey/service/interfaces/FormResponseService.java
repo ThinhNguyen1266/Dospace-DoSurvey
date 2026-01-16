@@ -1,7 +1,7 @@
 package com.dospace.dosurvey.service.interfaces;
 
-import com.dospace.dosurvey.dto.request.form.FormResponseRequest;
-import com.dospace.dosurvey.dto.response.form.FormResponseResponse;
+import com.dospace.dosurvey.dto.request.FormResponseRequest;
+import com.dospace.dosurvey.dto.response.FormResponseResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -1,8 +1,8 @@
 package com.dospace.dosurvey.controller;
 
 import com.dospace.dosurvey.dto.APIResponse;
-import com.dospace.dosurvey.dto.request.form.FormCategoryRequest;
-import com.dospace.dosurvey.dto.response.form.FormCategoryResponse;
+import com.dospace.dosurvey.dto.request.FormCategoryRequest;
+import com.dospace.dosurvey.dto.response.FormCategoryResponse;
 import com.dospace.dosurvey.service.interfaces.FormCategoryService;
 import com.dospace.dosurvey.utils.PaginationUtil;
 import jakarta.validation.Valid;

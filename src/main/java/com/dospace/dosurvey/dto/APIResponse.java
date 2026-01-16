@@ -78,7 +78,39 @@ public class APIResponse<T> {
                 .success(true)
                 .message(message)
                 .data(data)
-                .timestamp(vietnamTime())
+                .timestamp(Instant.now())
+                .build();
+    }
+
+    public static <T> APIResponse<T> success(T data, String message, String path, String traceId) {
+        return APIResponse.<T>builder()
+                .code(200)
+                .success(true)
+                .message(message)
+                .data(data)
+                .timestamp(Instant.now())
+                .path(path)
+                .traceId(traceId)
+                .build();
+    }
+
+    // Error response methods
+    public static APIResponse<String> error(String message, int code) {
+        return APIResponse.<String>builder()
+                .code(code)
+                .success(false)
+                .message(message)
+                .timestamp(Instant.now())
+                .build();
+    }
+
+    public static APIResponse<String> error(String message, int code, String details) {
+        return APIResponse.<String>builder()
+                .code(code)
+                .success(false)
+                .message(message)
+                .data(details)
+                .timestamp(Instant.now())
                 .build();
     }
 
@@ -91,6 +123,21 @@ public class APIResponse<T> {
                 .timestamp(Instant.now())
                 .path(path)
                 .traceId(traceId)
+                .build();
+    }
+
+    // Validation error methods
+    public static APIResponse<Map<String, String>> validationError(
+            String message,
+            List<ValidationError> validationErrors
+    ) {
+        return APIResponse.<Map<String, String>>builder()
+                .code(HttpStatus.BAD_REQUEST.value())
+                .success(false)
+                .message(message)
+                .data(validationErrors.parallelStream()
+                        .collect(Collectors.toMap(ValidationError::getField, ValidationError::getMessage)))
+                .timestamp(Instant.now())
                 .build();
     }
 

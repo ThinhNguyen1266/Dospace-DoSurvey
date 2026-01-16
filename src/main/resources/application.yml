@@ -1,0 +1,97 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: dosurvey
+  data:
+    redis:
+      master:
+        host: ${REDIS_MASTER_HOST:localhost}
+        port: ${REDIS_MASTER_PORT:6379}
+      password: ${REDIS_PASSWORD:dospace}
+      replicas: ${REDIS_REPLICAS:localhost:6380,localhost:6381}
+  datasource:
+    url: ${DOSURVEY_DB_URL:jdbc:postgresql://localhost:5434/dosurvey}
+    username: ${DOSURVEY_DB_USER:dospace}
+    password: ${DOSURVEY_DB_PASSWORD:dospace}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        globally_quoted_identifiers: true
+        jdbc:
+          time_zone: UTC
+          lob:
+            non_contextual_creation: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json.add.type.headers: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+# Service URLs for Feign clients
+tenant-iam-service:
+  url: ${TENANT_IAM_SERVICE_URL:http://localhost:8081}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: always
+  metrics:
+    tags:
+      application: ${spring.application.name}
+  tracing:
+    sampling:
+      probability: 1.0
+    export:
+      zipkin:
+        endpoint: http://localhost:9411/api/v2/spans
+
+logging:
+  pattern:
+    level: "%5p"
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%X{traceId:-},%X{spanId:-}]){yellow} %clr(---){faint} %clr(%-40.40logger{36}){cyan} %clr(:){faint} %m%n"
+  level:
+    root: INFO
+    org.springframework.web.servlet.DispatcherServlet: INFO
+    org.springframework.web.filter.CommonsRequestLoggingFilter: INFO
+    com.dospace.dosurvey: INFO
+    org.springframework.boot.actuate: WARN
+    io.micrometer: WARN
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} - %msg%n"
+  level:
+    root: INFO
+    com.dospace.dosurvey: INFO
+    org.springframework: WARN
+    com.netflix: WARN
