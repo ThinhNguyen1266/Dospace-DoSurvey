@@ -1,15 +1,7 @@
 package com.dospace.dosurvey.dto.response;
 
-import com.dospace.dosurvey.entity.enums.AccessPermission;
-import com.dospace.dosurvey.entity.enums.DeleteStatus;
-import com.dospace.dosurvey.entity.enums.FormCloseMode;
-import com.dospace.dosurvey.entity.enums.FormFor;
-import com.dospace.dosurvey.entity.enums.FormStatus;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.dospace.dosurvey.entity.enums.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;

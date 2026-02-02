@@ -5,9 +5,9 @@ import com.dospace.dosurvey.dto.request.CreateGroupRequest;
 import com.dospace.dosurvey.dto.request.InviteMemberRequest;
 import com.dospace.dosurvey.dto.request.UpdateGroupRequest;
 import com.dospace.dosurvey.dto.request.UpdateMemberRoleRequest;
-import com.dospace.dosurvey.dto.response.FormResponse;
 import com.dospace.dosurvey.dto.response.FormGroupMemberResponse;
 import com.dospace.dosurvey.dto.response.FormGroupResponse;
+import com.dospace.dosurvey.dto.response.FormResponse;
 import com.dospace.dosurvey.entity.FormEntity;
 import com.dospace.dosurvey.entity.FormGroupEntity;
 import com.dospace.dosurvey.entity.FormGroupMemberEntity;
@@ -16,11 +16,11 @@ import com.dospace.dosurvey.entity.enums.GroupRole;
 import com.dospace.dosurvey.entity.enums.InvitationStatus;
 import com.dospace.dosurvey.exception.AppException;
 import com.dospace.dosurvey.exception.ErrorCode;
-import com.dospace.dosurvey.mapper.FormMapper;
 import com.dospace.dosurvey.mapper.FormGroupMapper;
-import com.dospace.dosurvey.repository.FormRepository;
+import com.dospace.dosurvey.mapper.FormMapper;
 import com.dospace.dosurvey.repository.FormGroupMemberRepository;
 import com.dospace.dosurvey.repository.FormGroupRepository;
+import com.dospace.dosurvey.repository.FormRepository;
 import com.dospace.dosurvey.service.interfaces.FormGroupService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -299,7 +299,7 @@ public class FormGroupServiceImpl implements FormGroupService {
 
         // Check if user is an accepted admin member
         FormGroupMemberEntity member = memberRepository.findMemberByGroupAndEmailOrAccountId(
-                group.getId(), currentEmail, currentUserId, InvitationStatus.ACCEPTED)
+                        group.getId(), currentEmail, currentUserId, InvitationStatus.ACCEPTED)
                 .orElseThrow(() -> new AppException(ErrorCode.GROUP_ACCESS_DENIED));
 
         if (!member.canManageMembers()) {

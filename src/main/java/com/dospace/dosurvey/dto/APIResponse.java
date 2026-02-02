@@ -2,12 +2,7 @@ package com.dospace.dosurvey.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 
@@ -47,20 +42,6 @@ public class APIResponse<T> {
 
     @JsonProperty("traceId")
     String traceId;
-
-    @Getter
-    @Setter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    public static class ValidationError {
-        @JsonProperty("field")
-        String field;
-
-        @JsonProperty("message")
-        String message;
-    }
 
     public static <T> APIResponse<T> success(T data) {
         return APIResponse.<T>builder()
@@ -160,5 +141,19 @@ public class APIResponse<T> {
 
     private static Instant vietnamTime() {
         return ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh")).toInstant();
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class ValidationError {
+        @JsonProperty("field")
+        String field;
+
+        @JsonProperty("message")
+        String message;
     }
 }

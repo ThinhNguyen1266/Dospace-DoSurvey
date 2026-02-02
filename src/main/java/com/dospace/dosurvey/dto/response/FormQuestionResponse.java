@@ -3,11 +3,7 @@ package com.dospace.dosurvey.dto.response;
 import com.dospace.dosurvey.entity.enums.InputType;
 import com.dospace.dosurvey.entity.enums.QuestionType;
 import com.dospace.dosurvey.entity.enums.RatingType;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;

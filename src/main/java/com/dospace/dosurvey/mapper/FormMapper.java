@@ -3,11 +3,7 @@ package com.dospace.dosurvey.mapper;
 import com.dospace.dosurvey.dto.request.FormPageRequest;
 import com.dospace.dosurvey.dto.request.FormQuestionRequest;
 import com.dospace.dosurvey.dto.request.FormRequest;
-import com.dospace.dosurvey.dto.response.FormEditorResponse;
-import com.dospace.dosurvey.dto.response.FormOptions;
-import com.dospace.dosurvey.dto.response.FormPageResponse;
-import com.dospace.dosurvey.dto.response.FormQuestionResponse;
-import com.dospace.dosurvey.dto.response.FormResponse;
+import com.dospace.dosurvey.dto.response.*;
 import com.dospace.dosurvey.entity.FormEntity;
 import com.dospace.dosurvey.entity.FormPageEntity;
 import com.dospace.dosurvey.entity.FormQuestionEntity;
@@ -37,6 +33,7 @@ public interface FormMapper {
     @Mapping(target = "category", ignore = true)
     @Mapping(target = "group", ignore = true)
     @Mapping(target = "responses", ignore = true)
+    @Mapping(target = "pages", ignore = true)
     FormEntity fromRequestToEntity(FormRequest request);
 
     @Mapping(target = "categoryId", source = "category.id")

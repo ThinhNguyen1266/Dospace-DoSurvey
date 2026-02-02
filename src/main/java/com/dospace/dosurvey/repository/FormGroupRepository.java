@@ -19,19 +19,19 @@ public interface FormGroupRepository extends JpaRepository<FormGroupEntity, Stri
     Page<FormGroupEntity> findByOwnerIdAndDeleteStatus(String ownerId, DeleteStatus deleteStatus, Pageable pageable);
 
     @Query("SELECT g FROM FormGroupEntity g " +
-           "JOIN g.members m " +
-           "WHERE m.accountId = :accountId " +
-           "AND m.status = 'ACCEPTED' " +
-           "AND g.deleteStatus = :deleteStatus")
+            "JOIN g.members m " +
+            "WHERE m.accountId = :accountId " +
+            "AND m.status = 'ACCEPTED' " +
+            "AND g.deleteStatus = :deleteStatus")
     Page<FormGroupEntity> findGroupsByMemberAccountId(
             @Param("accountId") String accountId,
             @Param("deleteStatus") DeleteStatus deleteStatus,
             Pageable pageable);
 
     @Query("SELECT DISTINCT g FROM FormGroupEntity g " +
-           "LEFT JOIN g.members m " +
-           "WHERE (g.ownerId = :accountId OR (m.accountId = :accountId AND m.status = 'ACCEPTED')) " +
-           "AND g.deleteStatus = :deleteStatus")
+            "LEFT JOIN g.members m " +
+            "WHERE (g.ownerId = :accountId OR (m.accountId = :accountId AND m.status = 'ACCEPTED')) " +
+            "AND g.deleteStatus = :deleteStatus")
     Page<FormGroupEntity> findAllGroupsByAccountId(
             @Param("accountId") String accountId,
             @Param("deleteStatus") DeleteStatus deleteStatus,

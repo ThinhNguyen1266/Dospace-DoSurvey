@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TenantMailConfigResponse {
-  private String host;
-  private Integer port;
-  private String from;
-  private String username;
-  private String password;
-  private String agentAlias;
-  private String provider;
+    private String host;
+    private Integer port;
+    private String from;
+    private String username;
+    private String password;
+    private String agentAlias;
+    private String provider;
 }

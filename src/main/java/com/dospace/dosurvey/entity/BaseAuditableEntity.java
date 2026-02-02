@@ -32,19 +32,19 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseAuditableEntity {
 
-  @CreatedDate
-  @Column(name = "created_at", updatable = false)
-  LocalDateTime createdAt;
+    @CreatedDate
+    @Column(name = "created_at", updatable = false)
+    LocalDateTime createdAt;
 
-  @LastModifiedDate
-  @Column(name = "updated_at")
-  LocalDateTime updatedAt;
+    @LastModifiedDate
+    @Column(name = "updated_at")
+    LocalDateTime updatedAt;
 
-  @CreatedBy
-  @Column(name = "created_by", length = 12, updatable = false)
-  String createdBy;
+    @CreatedBy
+    @Column(name = "created_by", length = 12, updatable = false)
+    String createdBy;
 
-  @LastModifiedBy
-  @Column(name = "updated_by", length = 12, insertable = false)
-  String updatedBy;
+    @LastModifiedBy
+    @Column(name = "updated_by", length = 12, insertable = false)
+    String updatedBy;
 }

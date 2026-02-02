@@ -1,11 +1,7 @@
 package com.dospace.dosurvey.config;
 
 import io.micrometer.tracing.Tracer;
-import jakarta.servlet.Filter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
+import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,21 +15,21 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class TraceIdResponseFilter implements Filter {
 
-  private final Tracer tracer;
+    private final Tracer tracer;
 
-  @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-      throws IOException, ServletException {
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
-    if (response instanceof HttpServletResponse httpResponse) {
-      var span = tracer.currentSpan();
-      if (span != null) {
-        var traceId = span.context().traceId();
-        httpResponse.setHeader("X-Trace-Id", traceId);
-      }
+        if (response instanceof HttpServletResponse httpResponse) {
+            var span = tracer.currentSpan();
+            if (span != null) {
+                var traceId = span.context().traceId();
+                httpResponse.setHeader("X-Trace-Id", traceId);
+            }
+        }
+
+        chain.doFilter(request, response);
     }
-
-    chain.doFilter(request, response);
-  }
 }
 

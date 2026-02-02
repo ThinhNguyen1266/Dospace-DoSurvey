@@ -2,11 +2,7 @@ package com.dospace.dosurvey.dto.response;
 
 import com.dospace.dosurvey.entity.enums.AccessPermission;
 import com.dospace.dosurvey.entity.enums.FormRole;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;

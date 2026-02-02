@@ -12,11 +12,12 @@ import java.util.Date;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserContext {
-  String userId;
-  String email;
-  String userType;
-  String jwtId;
-  String tenantId;
-  Date issuedAt;
-  Date expiresAt;
+    String userId;
+    String email;
+    String userType;
+    String jwtId;
+    String tenantId;
+    String tenantType; // PERSONAL, ORGANIZATION, PLATFORM
+    Date issuedAt;
+    Date expiresAt;
 }

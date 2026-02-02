@@ -1,10 +1,6 @@
 package com.dospace.dosurvey.dto.response;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.List;
@@ -37,7 +33,7 @@ public class FormEditorResponse {
     String categoryId;
     String categoryName;
     List<FormPageResponse> pages;
-    
+
     // Sharing settings
     List<SharingSettingsResponse.CollaboratorResponse> collaborators;
     SharingSettingsResponse.AccessSettings editorAccess;

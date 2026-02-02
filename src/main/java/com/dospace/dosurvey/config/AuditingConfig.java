@@ -21,15 +21,15 @@ import java.util.Optional;
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider", dateTimeProviderRef = "auditingDateTimeProvider")
 public class AuditingConfig {
 
-  private static final ZoneId VIETNAM_ZONE = ZoneId.of("Asia/Ho_Chi_Minh");
+    private static final ZoneId VIETNAM_ZONE = ZoneId.of("Asia/Ho_Chi_Minh");
 
-  @Bean
-  public AuditorAware<String> auditorProvider() {
-    return () -> Optional.ofNullable(UserContextHolder.getCurrentAccountId());
-  }
+    @Bean
+    public AuditorAware<String> auditorProvider() {
+        return () -> Optional.ofNullable(UserContextHolder.getCurrentAccountId());
+    }
 
-  @Bean
-  public DateTimeProvider auditingDateTimeProvider() {
-    return () -> Optional.of(LocalDateTime.now(VIETNAM_ZONE));
-  }
+    @Bean
+    public DateTimeProvider auditingDateTimeProvider() {
+        return () -> Optional.of(LocalDateTime.now(VIETNAM_ZONE));
+    }
 }

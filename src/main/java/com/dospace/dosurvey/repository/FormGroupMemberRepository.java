@@ -28,9 +28,9 @@ public interface FormGroupMemberRepository extends JpaRepository<FormGroupMember
     boolean existsByGroupIdAndEmail(String groupId, String email);
 
     @Query("SELECT m FROM FormGroupMemberEntity m " +
-           "WHERE m.group.id = :groupId " +
-           "AND (m.email = :email OR m.accountId = :accountId) " +
-           "AND m.status = :status")
+            "WHERE m.group.id = :groupId " +
+            "AND (m.email = :email OR m.accountId = :accountId) " +
+            "AND m.status = :status")
     Optional<FormGroupMemberEntity> findMemberByGroupAndEmailOrAccountId(
             @Param("groupId") String groupId,
             @Param("email") String email,
@@ -38,8 +38,8 @@ public interface FormGroupMemberRepository extends JpaRepository<FormGroupMember
             @Param("status") InvitationStatus status);
 
     @Query("SELECT CASE WHEN COUNT(m) > 0 THEN true ELSE false END FROM FormGroupMemberEntity m " +
-           "WHERE m.group.id = :groupId " +
-           "AND (m.email = :email OR m.accountId = :accountId) " +
-           "AND m.status = 'ACCEPTED'")
+            "WHERE m.group.id = :groupId " +
+            "AND (m.email = :email OR m.accountId = :accountId) " +
+            "AND m.status = 'ACCEPTED'")
     boolean isActiveMember(@Param("groupId") String groupId, @Param("email") String email, @Param("accountId") String accountId);
 }

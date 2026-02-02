@@ -1,23 +1,9 @@
 package com.dospace.dosurvey.service.impl;
 
-import com.dospace.dosurvey.dto.request.CollaboratorDto;
-import com.dospace.dosurvey.dto.request.FormAIRequest;
-import com.dospace.dosurvey.dto.request.FormPageRequest;
-import com.dospace.dosurvey.dto.request.FormQuestionRequest;
-import com.dospace.dosurvey.dto.request.FormRequest;
-import com.dospace.dosurvey.dto.request.TransferFormOwnershipRequest;
-import com.dospace.dosurvey.dto.request.UpdateSharingRequest;
-import com.dospace.dosurvey.dto.response.FormAIResponse;
-import com.dospace.dosurvey.dto.response.FormEditorResponse;
-import com.dospace.dosurvey.dto.response.FormOptions;
-import com.dospace.dosurvey.dto.response.FormResponse;
-import com.dospace.dosurvey.dto.response.SharingSettingsResponse;
-import com.dospace.dosurvey.entity.FormCategoryEntity;
-import com.dospace.dosurvey.entity.FormCollaboratorEntity;
-import com.dospace.dosurvey.entity.FormEntity;
-import com.dospace.dosurvey.entity.FormPageEntity;
-import com.dospace.dosurvey.entity.FormQuestionEntity;
-import com.dospace.dosurvey.entity.FormSpecification;
+import com.dospace.dosurvey.context.TenantContextHolder;
+import com.dospace.dosurvey.dto.request.*;
+import com.dospace.dosurvey.dto.response.*;
+import com.dospace.dosurvey.entity.*;
 import com.dospace.dosurvey.entity.enums.AccessPermission;
 import com.dospace.dosurvey.entity.enums.DeleteStatus;
 import com.dospace.dosurvey.entity.enums.FormFor;
@@ -25,15 +11,10 @@ import com.dospace.dosurvey.entity.enums.FormStatus;
 import com.dospace.dosurvey.exception.AppException;
 import com.dospace.dosurvey.exception.ErrorCode;
 import com.dospace.dosurvey.mapper.FormMapper;
-import com.dospace.dosurvey.repository.FormCategoryRepository;
-import com.dospace.dosurvey.repository.FormCollaboratorRepository;
-import com.dospace.dosurvey.repository.FormPageRepository;
-import com.dospace.dosurvey.repository.FormQuestionRepository;
-import com.dospace.dosurvey.repository.FormRepository;
+import com.dospace.dosurvey.repository.*;
 import com.dospace.dosurvey.service.interfaces.FormService;
-import com.dospace.dosurvey.context.TenantContextHolder;
-import com.dospace.dosurvey.utils.SecurityContextUtil;
 import com.dospace.dosurvey.utils.NanoIdUtilsCustom;
+import com.dospace.dosurvey.utils.SecurityContextUtil;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -43,12 +24,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -132,7 +108,7 @@ public class FormServiceImpl implements FormService {
 
     @Override
     public Page<FormResponse> getAll(FormStatus status, FormFor formFor, String categoryId, boolean includeShared,
-            Pageable pageable) {
+                                     Pageable pageable) {
         String userId = SecurityContextUtil.getCurrentAccountId();
         String tenantId = TenantContextHolder.getCurrentTenant();
 
@@ -471,7 +447,7 @@ public class FormServiceImpl implements FormService {
     }
 
     private SharingSettingsResponse buildSharingSettingsResponse(FormEntity entity,
-            List<FormCollaboratorEntity> collaborators) {
+                                                                 List<FormCollaboratorEntity> collaborators) {
         List<SharingSettingsResponse.CollaboratorResponse> collaboratorResponses = collaborators.stream()
                 .map(collab -> SharingSettingsResponse.CollaboratorResponse.builder()
                         .accountId(collab.getAccountId())
